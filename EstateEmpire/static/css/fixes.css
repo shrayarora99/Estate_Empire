@@ -1,0 +1,109 @@
+/* Additional fixes for Estate Empire NYC */
+
+/* Ensure we override any dark mode settings */
+body {
+  background-color: #fff !important;
+  color: #1a202c !important;
+}
+
+.bg-dark {
+  background-color: #111827 !important;
+}
+
+.btn-outline-light {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff !important;
+  color: #1a5f7a !important;
+}
+
+/* Badge and pill overrides */
+.badge.bg-dark {
+  background-color: #212529 !important;
+  color: #fff !important;
+}
+
+.badge.bg-success {
+  background-color: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.badge.bg-primary {
+  background-color: #1a5f7a !important;
+  color: #fff !important;
+}
+
+.badge.bg-danger {
+  background-color: #e94f37 !important;
+  color: #fff !important;
+}
+
+/* Form controls */
+.form-control {
+  background-color: #fff !important;
+  color: #212529 !important;
+  border-color: #ced4da !important;
+}
+
+.form-control:focus {
+  background-color: #fff !important;
+  color: #212529 !important;
+}
+
+/* Card overrides */
+.card {
+  background-color: #fff !important;
+  color: #212529 !important;
+}
+
+.card-header, .card-footer {
+  background-color: rgba(0,0,0,.03) !important;
+}
+
+/* Text overrides */
+.text-secondary {
+  color: #6c757d !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+/* Fix for charts */
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+/* Fix for alerts */
+.alert-info {
+  color: #055160 !important;
+  background-color: #cff4fc !important;
+  border-color: #b6effb !important;
+}
+
+.alert-success {
+  color: #0f5132 !important;
+  background-color: #d1e7dd !important;
+  border-color: #badbcc !important;
+}
+
+.alert-warning {
+  color: #664d03 !important;
+  background-color: #fff3cd !important;
+  border-color: #ffecb5 !important;
+}
+
+.alert-danger {
+  color: #842029 !important;
+  background-color: #f8d7da !important;
+  border-color: #f5c2c7 !important;
+}
+
+/* Fix for neighborhood links */
+.footer a.text-light, 
+.footer .text-white {
+  color: #fff !important;
+}

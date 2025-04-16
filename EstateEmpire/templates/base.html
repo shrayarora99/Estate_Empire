@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Estate Empire NYC - Smart Rentals{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fixes.css') }}">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--estate-text-dark);
+            background-color: var(--bs-body-bg);
+        }
+        
+        .card {
+            background-color: var(--estate-card-bg);
+            border-color: var(--estate-border-color);
+        }
+        
+        .text-secondary {
+            color: #6c757d !important;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, var(--estate-primary) 0%, var(--estate-dark) 100%);">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='img/ee-logo.svg') }}" alt="Estate Empire" height="40" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == url_for('index') %}active{% endif %} fw-semibold" href="{{ url_for('index') }}">
+                            <i class="fas fa-home me-1"></i> Discover
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == url_for('prescreening') %}active{% endif %} fw-semibold" href="{{ url_for('prescreening') }}">
+                            <i class="fas fa-clipboard-check me-1"></i> Get Matched
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == url_for('landlord') %}active{% endif %} fw-semibold" href="{{ url_for('landlord') }}">
+                            <i class="fas fa-user-tie me-1"></i> Landlord Portal
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-sm btn-outline-light rounded-pill px-3 py-1 mt-1" href="#">
+                            <i class="fas fa-user me-1"></i> Sign In
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chatbot -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1030;">
+        <button id="chatbot-toggle" class="btn btn-primary rounded-circle p-3 shadow">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        
+        <div id="chatbot-container" class="card shadow d-none" style="width: 300px; position: absolute; bottom: 70px; right: 0;">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Estate Empire Assistant</h5>
+            </div>
+            <div id="chat-messages" class="card-body overflow-auto p-3" style="height: 300px;">
+                <!-- Chat messages will be added here -->
+            </div>
+            <div class="card-footer bg-light">
+                <div class="input-group">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Type a message...">
+                    <button id="send-message" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NYC Skyline -->
+    <div class="nyc-skyline">
+        <img src="{{ url_for('static', filename='img/nyc-skyline.svg') }}" alt="NYC Skyline" class="nyc-skyline-img">
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ url_for('static', filename='img/ee-logo.svg') }}" alt="Estate Empire" height="50" class="me-2">
+                    </div>
+                    <p class="mb-4">Stop chasing, start closing! The smarter way to find your perfect rental in NYC.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-3 text-white">Navigation</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{{ url_for('index') }}" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Discover</a></li>
+                        <li class="mb-2"><a href="{{ url_for('prescreening') }}" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Get Matched</a></li>
+                        <li class="mb-2"><a href="{{ url_for('landlord') }}" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Landlord Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-3 text-white">Neighborhoods</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Chelsea</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Williamsburg</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Upper East Side</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Astoria</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Park Slope</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3 text-white">Contact</h5>
+                    <address class="mb-0">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>1 World Trade Center<br>New York, NY 10007</div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-envelope"></i></div>
+                            <div>info@estateempire.com</div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-phone"></i></div>
+                            <div>(212) 555-1234</div>
+                        </div>
+                    </address>
+                </div>
+            </div>
+            <hr style="opacity: 0.1">
+            <div class="row py-2">
+                <div class="col-md-6 small">
+                    <p class="mb-0">&copy; 2025 Estate Empire. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+
+{% block title %}Estate Empire NYC - Smart Rental Matchmaking{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">Find Your Perfect NYC Rental Match</h1>
+        <p class="lead mb-4 text-white opacity-90 mx-auto" style="max-width: 700px">Estate Empire uses AI-powered tenant matching to connect you with properties that fit your lifestyle and finances. Stop chasing, start closing!</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('prescreening') }}" class="btn btn-primary btn-lg px-4 py-3">
+                <i class="fas fa-clipboard-check me-2"></i> Get Matched Now
+            </a>
+            <a href="#featured-properties" class="btn btn-outline-light btn-lg px-4 py-3">
+                <i class="fas fa-home me-2"></i> Explore Listings
+            </a>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-3 col-6 mb-3 mb-md-0">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">200+</div>
+                    <div class="small">Apartments Available</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-3 mb-md-0">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">98%</div>
+                    <div class="small">Tenant Satisfaction</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">24 hr</div>
+                    <div class="small">Average Match Time</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">$500+</div>
+                    <div class="small">Average Savings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+    <!-- Featured Properties Section -->
+    <section class="mt-5 pt-3" id="featured-properties">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Exclusive Listings</span>
+                <h2 class="fw-bold mb-0">Featured NYC Rental Properties</h2>
+            </div>
+            <a href="{{ url_for('prescreening') }}" class="btn btn-outline-primary d-none d-md-inline-flex">
+                <i class="fas fa-clipboard-check me-1"></i> Get Matched
+            </a>
+        </div>
+        
+        <div class="row g-4">
+            {% for property in properties %}
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-{{ loop.index }}">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    {% if property.immediate_availability %}
+                    <span class="label-new">MOVE-IN READY</span>
+                    {% endif %}
+                    
+                    <div class="card-img-container">
+                        <img src="{{ property.image_url }}" class="card-img-top" alt="{{ property.title }}">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ property.title }}</h5>
+                        <div class="property-price mb-2">${{ property.price }}<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ property.location }}
+                        </div>
+                        <p class="card-text text-secondary">{{ property.description }}</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: ${{ '{:,}'.format(property.min_income) }}
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: {{ property.min_credit_score }}
+                                </span>
+                                <span class="badge {% if property.pets_allowed %}bg-success{% else %}bg-danger{% endif %}">
+                                    <i class="fas {% if property.pets_allowed %}fa-paw{% else %}fa-ban{% endif %} me-1"></i>
+                                    Pets {% if property.pets_allowed %}Allowed{% else %}Not Allowed{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('prescreening') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Mobile CTA -->
+        <div class="text-center mt-4 d-md-none">
+            <a href="{{ url_for('prescreening') }}" class="btn btn-primary">
+                <i class="fas fa-clipboard-check me-1"></i> Get Matched
+            </a>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="my-5 py-5 bg-light rounded-4 shadow-sm">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-6 text-center">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Simple Process</span>
+                    <h2 class="fw-bold mb-3">How Estate Empire Works</h2>
+                    <p class="text-secondary mb-0">Our streamlined process saves you time and helps you find the perfect NYC apartment in minutes, not weeks.</p>
+                </div>
+            </div>
+            
+            <div class="row g-4 position-relative">
+                <!-- Connect line between steps -->
+                <div class="d-none d-md-block position-absolute" style="height: 2px; background: linear-gradient(90deg, var(--estate-secondary), var(--estate-accent)); top: 30%; left: 20%; right: 20%; z-index: 0;"></div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">1</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-clipboard-list fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">Pre-Screening</h3>
+                            <p class="text-secondary">Fill out our quick pre-screening form with your rental preferences and financial information.</p>
+                            <a href="{{ url_for('prescreening') }}" class="btn btn-sm btn-outline-primary mt-2">Get Started <i class="fas fa-chevron-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">2</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-star fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">Get Your Score</h3>
+                            <p class="text-secondary">We calculate your Tenant Credential Score based on multiple factors to assess your rental potential.</p>
+                            <span class="badge bg-success px-3 py-2 mt-2">Instant Results</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">3</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-building fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">View Matches</h3>
+                            <p class="text-secondary">See your perfect property matches categorized by fit, so you focus only on properties where you qualify.</p>
+                            <span class="badge bg-primary px-3 py-2 mt-2">Smart Matching</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Benefits Section -->
+    <section class="my-5 pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6">Estate Empire Advantages</span>
+                    <h2 class="fw-bold mt-2 mb-0 d-inline-block">Why Renters & Landlords Choose Us</h2>
+                </div>
+            </div>
+            
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1973&q=80" alt="Happy tenants" class="img-fluid rounded-4 shadow-lg" style="z-index: 1; position: relative;">
+                        
+                        <!-- Decorative elements -->
+                        <div class="position-absolute bg-primary rounded-circle" style="width: 180px; height: 180px; top: -20px; left: -20px; opacity: 0.1; z-index: 0;"></div>
+                        <div class="position-absolute bg-accent rounded-circle" style="width: 120px; height: 120px; bottom: -10px; right: 30px; opacity: 0.1; z-index: 0;"></div>
+                        
+                        <!-- Stats overlay -->
+                        <div class="position-absolute top-0 end-0 bg-white shadow rounded-start-pill rounded-bottom-pill p-3 me-3 mt-3" style="z-index: 2;">
+                            <div class="text-center px-3">
+                                <div class="h3 fw-bold text-primary mb-0">11+</div>
+                                <div class="small text-secondary">Days Saved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="ps-lg-4">
+                        <h2 class="fw-bold mb-4">Stop Chasing, Start Closing!</h2>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-clock text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Save Time</h5>
+                                <p class="text-secondary mb-0">Stop applying for apartments you won't qualify for. Our smart matching shows you only relevant listings.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-shield-alt text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Get Verified</h5>
+                                <p class="text-secondary mb-0">Earn a Verified Tenant Badge to stand out from other applicants when you score high enough.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-search text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Smart Filtering</h5>
+                                <p class="text-secondary mb-0">Our algorithm considers multiple factors beyond just income and credit score.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-user-tie text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Landlord Friendly</h5>
+                                <p class="text-secondary mb-0">Landlords get pre-screened, qualified applicants, making the rental process smoother for everyone.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="{{ url_for('prescreening') }}" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-clipboard-check me-2"></i> Start Matching Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="my-5 py-5 bg-light rounded-4">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-6 text-center">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Real Experiences</span>
+                    <h2 class="fw-bold mb-3">What NYC Renters Are Saying</h2>
+                    <p class="text-secondary mb-0">Don't just take our word for it. Here's what people using Estate Empire have to say.</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"I was spending weeks searching for apartments I couldn't qualify for. Estate Empire saved me so much time by only showing me places where I had a real chance!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">SM</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Sarah M.</h6>
+                                    <p class="small text-secondary mb-0">Chelsea, Manhattan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"As a landlord, I was getting flooded with unqualified applicants. Now I only see high-quality tenants who actually meet my requirements. Game changer!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">RJ</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Robert J.</h6>
+                                    <p class="small text-secondary mb-0">Property Owner, Brooklyn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"The verification badge helped me stand out from other applicants. I got approved for my dream apartment in Williamsburg the same day I applied!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">AK</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Alex K.</h6>
+                                    <p class="small text-secondary mb-0">Williamsburg, Brooklyn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

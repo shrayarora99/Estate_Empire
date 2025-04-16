@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate Empire NYC - Smart Rental Matchmaking</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/fixes.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--estate-text-dark);
+            background-color: var(--bs-body-bg);
+        }
+        
+        .card {
+            background-color: var(--estate-card-bg);
+            border-color: var(--estate-border-color);
+        }
+        
+        .text-secondary {
+            color: #6c757d !important;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, var(--estate-primary) 0%, var(--estate-dark) 100%);">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/static/img/ee-logo.svg" alt="Estate Empire" height="40" class="me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="/">
+                            <i class="fas fa-home me-1"></i> Discover
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  fw-semibold" href="/prescreening">
+                            <i class="fas fa-clipboard-check me-1"></i> Get Matched
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  fw-semibold" href="/landlord">
+                            <i class="fas fa-user-tie me-1"></i> Landlord Portal
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-sm btn-outline-light rounded-pill px-3 py-1 mt-1" href="#">
+                            <i class="fas fa-user me-1"></i> Sign In
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    
+        
+    
+
+    <!-- Main Content -->
+    <main>
+        
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">Find Your Perfect NYC Rental Match</h1>
+        <p class="lead mb-4 text-white opacity-90 mx-auto" style="max-width: 700px">Estate Empire uses AI-powered tenant matching to connect you with properties that fit your lifestyle and finances. Stop chasing, start closing!</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/prescreening" class="btn btn-primary btn-lg px-4 py-3">
+                <i class="fas fa-clipboard-check me-2"></i> Get Matched Now
+            </a>
+            <a href="#featured-properties" class="btn btn-outline-light btn-lg px-4 py-3">
+                <i class="fas fa-home me-2"></i> Explore Listings
+            </a>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-3 col-6 mb-3 mb-md-0">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">200+</div>
+                    <div class="small">Apartments Available</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-3 mb-md-0">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">98%</div>
+                    <div class="small">Tenant Satisfaction</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">24 hr</div>
+                    <div class="small">Average Match Time</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="bg-white bg-opacity-10 rounded p-3 text-center backdrop-blur">
+                    <div class="h2 fw-bold mb-0">$500+</div>
+                    <div class="small">Average Savings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+    <!-- Featured Properties Section -->
+    <section class="mt-5 pt-3" id="featured-properties">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Exclusive Listings</span>
+                <h2 class="fw-bold mb-0">Featured NYC Rental Properties</h2>
+            </div>
+            <a href="/prescreening" class="btn btn-outline-primary d-none d-md-inline-flex">
+                <i class="fas fa-clipboard-check me-1"></i> Get Matched
+            </a>
+        </div>
+        
+        <div class="row g-4">
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-1">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    <span class="label-new">MOVE-IN READY</span>
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" class="card-img-top" alt="Modern Studio in Chelsea">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Modern Studio in Chelsea</h5>
+                        <div class="property-price mb-2">$2500<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Chelsea, Manhattan
+                        </div>
+                        <p class="card-text text-secondary">A bright and modern studio apartment in the heart of Chelsea, featuring hardwood floors and stainless steel appliances.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $75,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 680
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="fas fa-paw me-1"></i>
+                                    Pets Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-2">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1980&amp;q=80" class="card-img-top" alt="Spacious 1BR in Williamsburg">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Spacious 1BR in Williamsburg</h5>
+                        <div class="property-price mb-2">$3200<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Williamsburg, Brooklyn
+                        </div>
+                        <p class="card-text text-secondary">Spacious 1-bedroom apartment with exposed brick, high ceilings, and a private balcony. Close to all the best restaurants and shops.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $96,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 700
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="fas fa-paw me-1"></i>
+                                    Pets Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-3">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    <span class="label-new">MOVE-IN READY</span>
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" class="card-img-top" alt="Luxury 2BR in Upper East Side">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Luxury 2BR in Upper East Side</h5>
+                        <div class="property-price mb-2">$4500<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Upper East Side, Manhattan
+                        </div>
+                        <p class="card-text text-secondary">Elegant 2-bedroom apartment in a doorman building with in-unit laundry, marble bathrooms, and a chef&#39;s kitchen.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $135,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 720
+                                </span>
+                                <span class="badge bg-danger">
+                                    <i class="fas fa-ban me-1"></i>
+                                    Pets Not Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-4">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    <span class="label-new">MOVE-IN READY</span>
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" class="card-img-top" alt="Cozy 1BR in Astoria">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Cozy 1BR in Astoria</h5>
+                        <div class="property-price mb-2">$2200<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Astoria, Queens
+                        </div>
+                        <p class="card-text text-secondary">Charming 1-bedroom apartment in a quiet neighborhood with great dining options. Recently renovated kitchen and bathroom.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $66,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 650
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="fas fa-paw me-1"></i>
+                                    Pets Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-5">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" class="card-img-top" alt="Historic Brownstone 3BR">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Historic Brownstone 3BR</h5>
+                        <div class="property-price mb-2">$5800<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Park Slope, Brooklyn
+                        </div>
+                        <p class="card-text text-secondary">Stunning 3-bedroom apartment in a historic brownstone with original details, a backyard garden, and proximity to Prospect Park.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $174,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 740
+                                </span>
+                                <span class="badge bg-danger">
+                                    <i class="fas fa-ban me-1"></i>
+                                    Pets Not Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4 featured-fade-in delay-6">
+                <div class="card property-card h-100">
+                    <!-- New tag for immediate availability -->
+                    
+                    <span class="label-new">MOVE-IN READY</span>
+                    
+                    
+                    <div class="card-img-container">
+                        <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" class="card-img-top" alt="Budget Studio in Washington Heights">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Budget Studio in Washington Heights</h5>
+                        <div class="property-price mb-2">$1800<span class="fs-6 text-secondary">/month</span></div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> Washington Heights, Manhattan
+                        </div>
+                        <p class="card-text text-secondary">Affordable studio apartment with good natural light and easy access to public transportation. Perfect for students or young professionals.</p>
+                        <div class="property-features">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: $54,000
+                                </span>
+                                <span class="badge bg-dark">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: 620
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="fas fa-paw me-1"></i>
+                                    Pets Allowed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/prescreening" class="btn btn-primary w-100">
+                            <i class="fas fa-check-circle me-1"></i> Check Eligibility
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Mobile CTA -->
+        <div class="text-center mt-4 d-md-none">
+            <a href="/prescreening" class="btn btn-primary">
+                <i class="fas fa-clipboard-check me-1"></i> Get Matched
+            </a>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="my-5 py-5 bg-light rounded-4 shadow-sm">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-6 text-center">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Simple Process</span>
+                    <h2 class="fw-bold mb-3">How Estate Empire Works</h2>
+                    <p class="text-secondary mb-0">Our streamlined process saves you time and helps you find the perfect NYC apartment in minutes, not weeks.</p>
+                </div>
+            </div>
+            
+            <div class="row g-4 position-relative">
+                <!-- Connect line between steps -->
+                <div class="d-none d-md-block position-absolute" style="height: 2px; background: linear-gradient(90deg, var(--estate-secondary), var(--estate-accent)); top: 30%; left: 20%; right: 20%; z-index: 0;"></div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">1</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-clipboard-list fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">Pre-Screening</h3>
+                            <p class="text-secondary">Fill out our quick pre-screening form with your rental preferences and financial information.</p>
+                            <a href="/prescreening" class="btn btn-sm btn-outline-primary mt-2">Get Started <i class="fas fa-chevron-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">2</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-star fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">Get Your Score</h3>
+                            <p class="text-secondary">We calculate your Tenant Credential Score based on multiple factors to assess your rental potential.</p>
+                            <span class="badge bg-success px-3 py-2 mt-2">Instant Results</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow h-100 bg-white position-relative z-1">
+                        <div class="position-absolute top-0 start-50 translate-middle bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-weight: bold; z-index: 2;">3</div>
+                        <div class="card-body text-center pt-5 p-4">
+                            <div class="icon-wrapper mb-4">
+                                <span class="fa-stack fa-2x">
+                                    <i class="fas fa-circle fa-stack-2x text-primary opacity-10"></i>
+                                    <i class="fas fa-building fa-stack-1x text-primary"></i>
+                                </span>
+                            </div>
+                            <h3 class="h4 fw-bold">View Matches</h3>
+                            <p class="text-secondary">See your perfect property matches categorized by fit, so you focus only on properties where you qualify.</p>
+                            <span class="badge bg-primary px-3 py-2 mt-2">Smart Matching</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Benefits Section -->
+    <section class="my-5 pt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6">Estate Empire Advantages</span>
+                    <h2 class="fw-bold mt-2 mb-0 d-inline-block">Why Renters & Landlords Choose Us</h2>
+                </div>
+            </div>
+            
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1973&q=80" alt="Happy tenants" class="img-fluid rounded-4 shadow-lg" style="z-index: 1; position: relative;">
+                        
+                        <!-- Decorative elements -->
+                        <div class="position-absolute bg-primary rounded-circle" style="width: 180px; height: 180px; top: -20px; left: -20px; opacity: 0.1; z-index: 0;"></div>
+                        <div class="position-absolute bg-accent rounded-circle" style="width: 120px; height: 120px; bottom: -10px; right: 30px; opacity: 0.1; z-index: 0;"></div>
+                        
+                        <!-- Stats overlay -->
+                        <div class="position-absolute top-0 end-0 bg-white shadow rounded-start-pill rounded-bottom-pill p-3 me-3 mt-3" style="z-index: 2;">
+                            <div class="text-center px-3">
+                                <div class="h3 fw-bold text-primary mb-0">11+</div>
+                                <div class="small text-secondary">Days Saved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="ps-lg-4">
+                        <h2 class="fw-bold mb-4">Stop Chasing, Start Closing!</h2>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-clock text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Save Time</h5>
+                                <p class="text-secondary mb-0">Stop applying for apartments you won't qualify for. Our smart matching shows you only relevant listings.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-shield-alt text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Get Verified</h5>
+                                <p class="text-secondary mb-0">Earn a Verified Tenant Badge to stand out from other applicants when you score high enough.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-search text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Smart Filtering</h5>
+                                <p class="text-secondary mb-0">Our algorithm considers multiple factors beyond just income and credit score.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-3">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                                    <i class="fas fa-user-tie text-primary"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Landlord Friendly</h5>
+                                <p class="text-secondary mb-0">Landlords get pre-screened, qualified applicants, making the rental process smoother for everyone.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="/prescreening" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-clipboard-check me-2"></i> Start Matching Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="my-5 py-5 bg-light rounded-4">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-6 text-center">
+                    <span class="badge bg-primary text-white px-3 py-2 fs-6 mb-2">Real Experiences</span>
+                    <h2 class="fw-bold mb-3">What NYC Renters Are Saying</h2>
+                    <p class="text-secondary mb-0">Don't just take our word for it. Here's what people using Estate Empire have to say.</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"I was spending weeks searching for apartments I couldn't qualify for. Estate Empire saved me so much time by only showing me places where I had a real chance!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">SM</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Sarah M.</h6>
+                                    <p class="small text-secondary mb-0">Chelsea, Manhattan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"As a landlord, I was getting flooded with unqualified applicants. Now I only see high-quality tenants who actually meet my requirements. Game changer!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">RJ</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Robert J.</h6>
+                                    <p class="small text-secondary mb-0">Property Owner, Brooklyn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="text-secondary mb-0">"The verification badge helped me stand out from other applicants. I got approved for my dream apartment in Williamsburg the same day I applied!"</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-secondary bg-opacity-10 rounded-circle me-3" style="width: 48px; height: 48px;">
+                                    <span class="d-flex align-items-center justify-content-center h-100 fw-bold text-primary">AK</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Alex K.</h6>
+                                    <p class="small text-secondary mb-0">Williamsburg, Brooklyn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+    </main>
+
+    <!-- Chatbot -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1030;">
+        <button id="chatbot-toggle" class="btn btn-primary rounded-circle p-3 shadow">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        
+        <div id="chatbot-container" class="card shadow d-none" style="width: 300px; position: absolute; bottom: 70px; right: 0;">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Estate Empire Assistant</h5>
+            </div>
+            <div id="chat-messages" class="card-body overflow-auto p-3" style="height: 300px;">
+                <!-- Chat messages will be added here -->
+            </div>
+            <div class="card-footer bg-light">
+                <div class="input-group">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Type a message...">
+                    <button id="send-message" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NYC Skyline -->
+    <div class="nyc-skyline">
+        <img src="/static/img/nyc-skyline.svg" alt="NYC Skyline" class="nyc-skyline-img">
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/static/img/ee-logo.svg" alt="Estate Empire" height="50" class="me-2">
+                    </div>
+                    <p class="mb-4">Stop chasing, start closing! The smarter way to find your perfect rental in NYC.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-3 text-white">Navigation</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Discover</a></li>
+                        <li class="mb-2"><a href="/prescreening" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Get Matched</a></li>
+                        <li class="mb-2"><a href="/landlord" class="text-light text-decoration-none"><i class="fas fa-chevron-right me-1 small"></i> Landlord Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4 mb-md-0">
+                    <h5 class="mb-3 text-white">Neighborhoods</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Chelsea</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Williamsburg</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Upper East Side</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Astoria</a></li>
+                        <li class="mb-2"><a href="#" class="text-light text-decoration-none">Park Slope</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-3 text-white">Contact</h5>
+                    <address class="mb-0">
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>1 World Trade Center<br>New York, NY 10007</div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-envelope"></i></div>
+                            <div>info@estateempire.com</div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-3 text-center" style="width: 24px;"><i class="fas fa-phone"></i></div>
+                            <div>(212) 555-1234</div>
+                        </div>
+                    </address>
+                </div>
+            </div>
+            <hr style="opacity: 0.1">
+            <div class="row py-2">
+                <div class="col-md-6 small">
+                    <p class="mb-0">&copy; 2025 Estate Empire. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/static/js/scripts.js"></script>
+    
+    
+</body>
+</html>

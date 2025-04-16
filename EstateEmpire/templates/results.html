@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Match Results - Estate Empire Lite{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Results Header with Score -->
+    <div class="row mb-5">
+        <div class="col-md-10 mx-auto text-center">
+            <h1 class="mb-3">Your Rental Match Results</h1>
+            <p class="lead">Based on your information, we've found properties that match your needs and qualifications.</p>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <h6 class="text-muted mb-2">Your Tenant Credential Score</h6>
+                            <div class="tenant-score">{{ tenant.score }}</div>
+                            <div class="progress mt-2" style="height: 10px;">
+                                <div class="progress-bar
+                                {% if tenant.score >= 80 %}bg-success
+                                {% elif tenant.score >= 60 %}bg-warning
+                                {% else %}bg-danger{% endif %}"
+                                role="progressbar" style="width: {{ tenant.score }}%"
+                                aria-valuenow="{{ tenant.score }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 text-center border-start border-end">
+                            <h6 class="text-muted mb-2">Tenant Status</h6>
+                            {% if tenant.verified %}
+                            <div class="badge-verified">
+                                <i class="fas fa-check-circle"></i> Verified Tenant
+                            </div>
+                            {% else %}
+                            <div class="badge bg-secondary">
+                                <i class="fas fa-user"></i> Standard Tenant
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4 text-center">
+                            <h6 class="text-muted mb-2">Match Summary</h6>
+                            <div class="d-flex flex-column gap-1">
+                                <div>
+                                    <i class="fas fa-check-circle text-success"></i>
+                                    <span class="ms-2">{{ perfect_matches|length }} Perfect Matches</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    <span class="ms-2">{{ good_fits|length }} Good Fits</span>
+                                </div>
+                                <div>
+                                    <i class="fas fa-times-circle text-danger"></i>
+                                    <span class="ms-2">{{ not_matches|length }} Not a Match</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Perfect Matches -->
+    {% if perfect_matches %}
+    <section class="mb-5">
+        <h2 class="mb-4">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            Perfect Matches ({{ perfect_matches|length }})
+        </h2>
+        
+        <div class="row g-4">
+            {% for property, match_score in perfect_matches %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card property-card h-100 match-perfect">
+                    <div class="card-img-container">
+                        <img src="{{ property.image_url }}" class="card-img-top" alt="{{ property.title }}">
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <span class="badge bg-success">
+                                {{ match_score }}% Match
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <div class="property-price mb-2">${{ property.price }}/month</div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ property.location }}
+                        </div>
+                        <p class="card-text">{{ property.description }}</p>
+                        <div class="property-features mb-3">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: ${{ property.min_income }}
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: {{ property.min_credit_score }}
+                                </span>
+                                <span class="badge {% if property.pets_allowed %}bg-success{% else %}bg-danger{% endif %}">
+                                    <i class="fas {% if property.pets_allowed %}fa-paw{% else %}fa-ban{% endif %} me-1"></i>
+                                    Pets {% if property.pets_allowed %}Allowed{% else %}Not Allowed{% endif %}
+                                </span>
+                                <span class="badge {% if property.immediate_availability %}bg-info{% else %}bg-warning{% endif %}">
+                                    <i class="fas {% if property.immediate_availability %}fa-calendar-check{% else %}fa-calendar{% endif %} me-1"></i>
+                                    {% if property.immediate_availability %}Immediate{% else %}Future{% endif %} Availability
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <button type="button" class="btn btn-success w-100" disabled>
+                            <i class="fas fa-check-circle me-1"></i> You Qualify!
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Good Fits -->
+    {% if good_fits %}
+    <section class="mb-5">
+        <h2 class="mb-4">
+            <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+            Good Fits ({{ good_fits|length }})
+        </h2>
+        
+        <div class="row g-4">
+            {% for property, match_score in good_fits %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card property-card h-100 match-good">
+                    <div class="card-img-container">
+                        <img src="{{ property.image_url }}" class="card-img-top" alt="{{ property.title }}">
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <span class="badge bg-warning text-dark">
+                                {{ match_score }}% Match
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <div class="property-price mb-2">${{ property.price }}/month</div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ property.location }}
+                        </div>
+                        <p class="card-text">{{ property.description }}</p>
+                        <div class="property-features mb-3">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: ${{ property.min_income }}
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: {{ property.min_credit_score }}
+                                </span>
+                                <span class="badge {% if property.pets_allowed %}bg-success{% else %}bg-danger{% endif %}">
+                                    <i class="fas {% if property.pets_allowed %}fa-paw{% else %}fa-ban{% endif %} me-1"></i>
+                                    Pets {% if property.pets_allowed %}Allowed{% else %}Not Allowed{% endif %}
+                                </span>
+                                <span class="badge {% if property.immediate_availability %}bg-info{% else %}bg-warning{% endif %}">
+                                    <i class="fas {% if property.immediate_availability %}fa-calendar-check{% else %}fa-calendar{% endif %} me-1"></i>
+                                    {% if property.immediate_availability %}Immediate{% else %}Future{% endif %} Availability
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <button type="button" class="btn btn-warning w-100" disabled>
+                            <i class="fas fa-exclamation-triangle me-1"></i> Potential Match
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Not a Match -->
+    {% if not_matches %}
+    <section class="mb-5">
+        <h2 class="mb-4">
+            <i class="fas fa-times-circle text-danger me-2"></i>
+            Not a Match ({{ not_matches|length }})
+        </h2>
+        
+        <div class="row g-4">
+            {% for property, match_score in not_matches %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card property-card h-100 match-poor">
+                    <div class="card-img-container">
+                        <img src="{{ property.image_url }}" class="card-img-top" alt="{{ property.title }}" style="filter: grayscale(50%);">
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <span class="badge bg-danger">
+                                {{ match_score }}% Match
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <div class="property-price mb-2">${{ property.price }}/month</div>
+                        <div class="property-location mb-3">
+                            <i class="fas fa-map-marker-alt me-1"></i> {{ property.location }}
+                        </div>
+                        <p class="card-text">{{ property.description }}</p>
+                        <div class="property-features mb-3">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-money-bill-wave me-1"></i> Min Income: ${{ property.min_income }}
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-credit-card me-1"></i> Min Credit: {{ property.min_credit_score }}
+                                </span>
+                                <span class="badge {% if property.pets_allowed %}bg-success{% else %}bg-danger{% endif %}">
+                                    <i class="fas {% if property.pets_allowed %}fa-paw{% else %}fa-ban{% endif %} me-1"></i>
+                                    Pets {% if property.pets_allowed %}Allowed{% else %}Not Allowed{% endif %}
+                                </span>
+                                <span class="badge {% if property.immediate_availability %}bg-info{% else %}bg-warning{% endif %}">
+                                    <i class="fas {% if property.immediate_availability %}fa-calendar-check{% else %}fa-calendar{% endif %} me-1"></i>
+                                    {% if property.immediate_availability %}Immediate{% else %}Future{% endif %} Availability
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <button type="button" class="btn btn-danger w-100" disabled>
+                            <i class="fas fa-times-circle me-1"></i> Not a Match
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- No Matches Message -->
+    {% if not perfect_matches and not good_fits and not not_matches %}
+    <div class="alert alert-info text-center my-5 p-4">
+        <i class="fas fa-info-circle fa-2x mb-3"></i>
+        <h4>No Properties Found</h4>
+        <p class="mb-0">We couldn't find any properties matching your criteria right now. Try adjusting your preferences or check back later for new listings.</p>
+    </div>
+    {% endif %}
+    
+    <!-- Action Section -->
+    <div class="text-center my-5">
+        <a href="{{ url_for('prescreening') }}" class="btn btn-outline-primary me-2">
+            <i class="fas fa-redo me-1"></i> Update Your Preferences
+        </a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">
+            <i class="fas fa-home me-1"></i> Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

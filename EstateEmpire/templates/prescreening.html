@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Pre-Screening Form - Estate Empire Lite{% endblock %}
+
+{% block content %}
+<!-- Pre-screening Header -->
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-10 mx-auto text-center">
+            <h1 class="mb-3">Rental Pre-Screening Form</h1>
+            <p class="lead">Tell us about yourself so we can match you with properties that fit your needs and qualifications.</p>
+        </div>
+    </div>
+
+    <!-- Pre-screening Form -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="form-section">
+                <form action="{{ url_for('prescreening') }}" method="post" class="needs-validation" novalidate>
+                    <!-- Personal Information -->
+                    <div class="mb-4">
+                        <h4 class="mb-3">Personal Information</h4>
+                        <div class="mb-3">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" required>
+                            <div class="invalid-feedback">
+                                Please provide your full name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Housing Preferences -->
+                    <div class="mb-4">
+                        <h4 class="mb-3">Housing Preferences</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Preferred Neighborhoods</label>
+                            <div class="row">
+                                {% for neighborhood in neighborhoods %}
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="preferred_neighborhoods" value="{{ neighborhood }}" id="neighborhood-{{ loop.index }}">
+                                        <label class="form-check-label" for="neighborhood-{{ loop.index }}">
+                                            {{ neighborhood }}
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="max_rent" class="form-label">Maximum Monthly Rent ($)</label>
+                            <input type="number" class="form-control" id="max_rent" name="max_rent" min="1000" max="10000" required>
+                            <div class="invalid-feedback">
+                                Please enter a valid maximum rent amount.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="move_in_date" class="form-label">Preferred Move-In Date</label>
+                            <input type="date" class="form-control" id="move_in_date" name="move_in_date" required>
+                            <div class="invalid-feedback">
+                                Please select your preferred move-in date.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Information -->
+                    <div class="mb-4">
+                        <h4 class="mb-3">Financial Information</h4>
+                        
+                        <div class="mb-3">
+                            <label for="credit-score-slider" class="form-label">Credit Score</label>
+                            <div class="d-flex align-items-center gap-3">
+                                <input type="range" class="form-range flex-grow-1" id="credit-score-slider" name="credit_score" min="300" max="850" step="1" value="650" required>
+                                <span class="badge bg-secondary" id="credit-score-value">650</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="annual-income" class="form-label">Annual Income ($)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" id="annual-income" name="annual_income" placeholder="60,000" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your annual income.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="employment_status" class="form-label">Employment Status</label>
+                            <select class="form-select" id="employment_status" name="employment_status" required>
+                                <option value="" selected disabled>Select your employment status</option>
+                                <option value="full-time">Full-time</option>
+                                <option value="part-time">Part-time</option>
+                                <option value="freelancer">Freelancer</option>
+                                <option value="student">Student</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select your employment status.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="mb-4">
+                        <h4 class="mb-3">Additional Information</h4>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="has_pets" name="has_pets">
+                            <label class="form-check-label" for="has_pets">I have pets</label>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="has_guarantor" name="has_guarantor">
+                            <label class="form-check-label" for="has_guarantor">I will use a guarantor (co-signer)</label>
+                        </div>
+                    </div>
+
+                    <!-- Consent and Submit -->
+                    <div class="mb-4">
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="consent" required>
+                            <label class="form-check-label" for="consent">
+                                I consent to Estate Empire Lite using my information to match me with properties.
+                            </label>
+                            <div class="invalid-feedback">
+                                You must agree before submitting.
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-clipboard-check me-2"></i> Submit and Get Matched
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="row mb-5">
+        <div class="col-md-10 mx-auto">
+            <h3 class="text-center mb-4">What Happens Next?</h3>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="text-primary display-4 mb-3">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h5 class="card-title">Score Calculation</h5>
+                            <p class="card-text">We'll instantly calculate your Tenant Credential Score based on multiple factors.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="text-primary display-4 mb-3">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5 class="card-title">Property Matching</h5>
+                            <p class="card-text">Our algorithm will match you with properties where you meet the qualification criteria.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <div class="text-primary display-4 mb-3">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <h5 class="card-title">Get Matched</h5>
+                            <p class="card-text">View your matches categorized as Perfect Match, Good Fit, or Not a Match.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
